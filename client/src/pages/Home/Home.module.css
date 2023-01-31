@@ -1,0 +1,53 @@
+.brands-container {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  justify-content: space-around;
+  margin: 1.5rem;
+}
+
+.carousel-container {
+  background-color: #adff2f;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 2rem;
+}
+
+.brands-container img {
+  max-width: 15%;
+}
+
+.hero {
+  position: relative;
+}
+
+.hero p {
+  animation: fadeIn ease 1s;
+  bottom: auto;
+  color: white;
+  font-family: Teko;
+  font-size: 4rem;
+  font-weight: 600;
+  left: 70px;
+  letter-spacing: 6px;
+  position: absolute;
+  text-align: left;
+  top: 90px;
+  width: 45%;
+}
+
+.site-container {
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

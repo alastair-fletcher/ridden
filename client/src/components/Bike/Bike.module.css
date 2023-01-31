@@ -1,0 +1,24 @@
+.heart {
+  color: rgb(195, 195, 195);
+  height: 1.3rem;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.heartOn {
+  color: rgb(255, 107, 107);
+  animation: fadeIn ease 1s;
+}
+
+.topLine {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
