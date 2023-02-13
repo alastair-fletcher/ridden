@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'MyFont';
-  src: local('MyFont'), url(../fonts/JerseySharp.ttf) format('truetype');
+  src: local('JerseySharp'), url(../../fonts/JerseySharp.ttf) format('truetype');
 }
 
 .navbar {
@@ -8,12 +8,13 @@
 }
 
 .brandtitle {
-  font-family: 'MyFont';
+  font-family: 'JerseySharp';
   font-size: 2rem;
 }
 
 .profilePic {
   border-radius: 50%;
+  background-color: aqua;
   overflow: 'hidden';
   object-fit: 'cover';
   height: 40px;
@@ -32,13 +33,13 @@
   padding-right: 1rem;
 }
 
-.fontAwesome {
+.react-icons {
   color: white;
   height: 1.5rem;
   margin: 0 1rem;
   cursor: pointer;
 }
 
-.fontAwesome:hover {
+.react-icons:hover {
   color: rgb(195, 195, 195);
 }
