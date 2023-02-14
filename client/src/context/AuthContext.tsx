@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   deleteUser,
+  User,
 } from 'firebase/auth';
 
 export const AuthContext = createContext(null);
@@ -39,11 +40,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return sendPasswordResetEmail(auth, email);
   }
 
-  function setNewEmail(email: string) {
+  function setNewEmail(currentUser: User, email: string) {
     return updateEmail(currentUser, email);
   }
 
-  function setNewPassword(newPassword: string) {
+  function setNewPassword(currentUser: User, newPassword: string) {
     return updatePassword(currentUser, newPassword);
   }
 
