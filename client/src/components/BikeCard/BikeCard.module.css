@@ -1,0 +1,22 @@
+.heart {
+  color: rgb(195, 195, 195);
+  cursor: pointer;
+}
+
+.heartOn {
+  color: rgb(255, 107, 107);
+}
+
+.topLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
