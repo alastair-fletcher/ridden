@@ -35,14 +35,6 @@
   width: 45%;
 }
 
-.site-container {
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
-}
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
