@@ -1,18 +1,31 @@
-import express, { Express } from 'express';
+import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { router } from './routes/router';
+import { bikes } from './routes/bikes';
+import { userLikes } from './routes/userLikes';
+import { connectDB } from './db/connect';
 
 dotenv.config();
 
-const app: Express = express();
-const port = process.env.PORT;
+const app = express();
 
 app.use(cors());
 app.use(morgan('tiny'));
-app.use(router);
+app.use(express.json());
+app.use('/api/v1/bikes', bikes);
+app.use('/api/v1/userLikes', userLikes);
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+const port = process.env.PORT || 3030;
+
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI)
+    app.listen(port, () => {
+      console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+start()
