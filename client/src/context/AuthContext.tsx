@@ -13,14 +13,61 @@ import {
   User,
 } from 'firebase/auth';
 
-export const AuthContext = createContext(null);
+import { IAuthContext } from '../interfaces/interfaces';
+
+// default value for auth context provided to clear up TS errors - not sure if this is best approach.
+export const AuthContext = createContext<IAuthContext>({
+  currentUser: null,
+  signup: async (email: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      // implementation for signup
+    });
+  },
+  login: async (email: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      // implementation for login
+    });
+  },
+  logout: async () => {
+    return new Promise((resolve, reject) => {
+      // implementation for logout
+    });
+  },
+  resetPassword: async (email: string) => {
+    return new Promise((resolve, reject) => {
+      // implementation for resetPassword
+    });
+  },
+  setNewEmail: async (currentUser: User | null, email: string) => {
+    return new Promise((resolve, reject) => {
+      // implementation for setNewEmail
+    });
+  },
+  setNewPassword: async (currentUser: User | null, newPassword: string) => {
+    return new Promise((resolve, reject) => {
+      // implementation for setNewPassword
+    });
+  },
+  googleLogin: async () => {
+    return new Promise((resolve, reject) => {
+      // implementation for googleLogin
+    });
+  },
+  deleteAccount: async (currentUser: User | null) => {
+    return new Promise((resolve, reject) => {
+      // implementation for deleteAccount
+    });
+  },
+  modal: false,
+  setModal: () => {},
+});
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
 
@@ -53,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return signInWithPopup(auth, provider);
   }
 
-  function deleteAccount() {
+  function deleteAccount(currentUser: User) {
     return deleteUser(currentUser);
   }
 

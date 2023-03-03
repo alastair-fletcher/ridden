@@ -1,26 +1,33 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { ILoginSignUpProps } from '../../interfaces/interfaces';
 
-export function SignUp({ setHasAccount, setModal, modal, toggleModal }) {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+export function SignUp({
+  setHasAccount,
+  loading,
+  setLoading,
+  error,
+  setError,
+  toggleModal,
+}: ILoginSignUpProps) {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfirmRef = useRef<HTMLInputElement>(null);
+  const { signup, modal, setModal } = useAuth();
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (passwordRef?.current?.value !== passwordConfirmRef?.current?.value) {
+      setHasAccount(true);
       return setError('Passwords do not match');
     }
     try {
       setError('');
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(emailRef.current?.value, passwordRef.current?.value);
     } catch {
+      setHasAccount(true);
       setError('Failed to create an account');
     }
     setModal(false);
@@ -31,10 +38,9 @@ export function SignUp({ setHasAccount, setModal, modal, toggleModal }) {
   return (
     <Modal show={modal} onHide={toggleModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Create account...</Modal.Title>
+        <Modal.Title>Sign up</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h2 className="text-center mb-4">Sign Up</h2>
         {error && <Alert variant="danger">Passwords do not match</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email">
@@ -54,7 +60,9 @@ export function SignUp({ setHasAccount, setModal, modal, toggleModal }) {
           </Button>
           <div className="w-100 text-center mt-4">
             Already have an account?
-            <span onClick={handleBackToLogin}>Log In</span>
+            <span onClick={handleBackToLogin}>
+              <strong>Log In</strong>
+            </span>
           </div>
         </Form>
       </Modal.Body>
