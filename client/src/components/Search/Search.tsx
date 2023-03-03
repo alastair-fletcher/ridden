@@ -1,15 +1,11 @@
-import styles from './Search.module.css';
-import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react';
+import { ISearchProps } from '../../interfaces/interfaces';
+import styles from './Search.module.css';
 
-export function Search({
-  setSearchQuery,
-}: {
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-}) {
+export function Search({ setSearchQuery }: ISearchProps) {
   const [input, setInput] = useState('');
-  const [prevSearches, setPrevSearches] = useState([]);
-  console.log(prevSearches);
+  const [prevSearches, setPrevSearches] = useState<string[]>([]);
+  console.log(prevSearches.slice(-5));
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -17,7 +13,7 @@ export function Search({
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    input && setPrevSearches([...prevSearches, input]);
+    input && setPrevSearches([...prevSearches, input.trim()]);
     setSearchQuery(input);
   };
 
@@ -29,9 +25,6 @@ export function Search({
         placeholder="Search bikes..."
         onChange={handleSearchChange}
       />
-      <button type="submit">
-        <FaSearch />
-      </button>
     </form>
   );
 }
