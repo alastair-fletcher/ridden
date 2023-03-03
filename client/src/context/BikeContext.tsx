@@ -39,7 +39,7 @@ export function BikesProvider({ children }: { children: React.ReactNode }) {
     const fetchBikeData = async () => {
       dispatch({ type: REDUCER_ACTION_TYPE.FETCH_REQUEST });
       try {
-        const response = await fetch('http://localhost:8000/api/bikes');
+        const response = await fetch('http://localhost:8000/api/v1/bikes');
         const bikeData = await response.json();
         dispatch({
           type: REDUCER_ACTION_TYPE.FETCH_SUCCESS,
@@ -50,6 +50,7 @@ export function BikesProvider({ children }: { children: React.ReactNode }) {
       }
     };
     fetchBikeData();
+    return;
   }, []);
 
   const value = { loading, error, bikes };
