@@ -5,38 +5,25 @@ import { IconContext } from 'react-icons';
 import { BiHeart } from 'react-icons/bi';
 import { IBikeType } from '../../interfaces/interfaces';
 import { useAuth } from '../../context/AuthContext';
+import { toggleLike } from '../../API/API';
 import styles from './BikeCard.module.css';
 
 export function Bike({ bike }: { bike: IBikeType }) {
   const [heartColor, setHeartColor] = useState(false);
   const { currentUser, modal, setModal } = useAuth();
 
-  const handleHeart = () => {
-    setHeartColor((prev) => !prev);
-  };
-
-  const handleLike = () => {
-    console.log(`${currentUser?.uid} has LIKED ${bike.title}`);
-  };
-
-  const handleUnlike = () => {
-    console.log(`${currentUser?.uid} has UNLIKED ${bike.title}`);
-  };
-
-  const toggleModal = () => setModal((prev) => !prev);
-
-  const handleHeartClick = () => {
+  function handleClick() {
     if (currentUser) {
-      handleHeart();
+      setHeartColor((prev) => !prev);
       if (!heartColor) {
-        handleLike();
+        toggleLike(currentUser?.uid, bike.bikeId);
       } else {
-        handleUnlike();
+        toggleLike(currentUser?.uid, bike.bikeId);
       }
     } else {
-      toggleModal();
+      setModal((prev) => !prev);
     }
-  };
+  }
 
   return (
     <Card>
@@ -57,7 +44,7 @@ export function Bike({ bike }: { bike: IBikeType }) {
           >
             <BiHeart
               className={`${styles.heart} ${heartColor && styles.heartOn}`}
-              onClick={handleHeartClick}
+              onClick={handleClick}
             />
           </IconContext.Provider>
         </div>

@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { bikes } from './routes/bikes';
-import { userLikes } from './routes/userLikes';
+import { users } from './routes/users';
 import { connectDB } from './db/connect';
 
 dotenv.config();
@@ -14,7 +14,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use('/api/v1/bikes', bikes);
-app.use('/api/v1/userLikes', userLikes);
+app.use('/api/v1/users', users);
 
 const port = process.env.PORT || 3030;
 
