@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
 import { ILoginSignUpProps } from '../../interfaces/interfaces';
+import { addUser } from '../../API/API';
 
 export function SignUp({
   setHasAccount,
@@ -16,16 +17,20 @@ export function SignUp({
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const { signup, modal, setModal } = useAuth();
 
+  // SIGN UP NEW USER WITH EMAIL / PASSWORD + ADD USER TO DB
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     if (passwordRef?.current?.value !== passwordConfirmRef?.current?.value) {
+      //TODO - check this
       setHasAccount(true);
       return setError('Passwords do not match');
     }
     try {
       setError('');
       setLoading(true);
-      await signup(emailRef.current?.value, passwordRef.current?.value);
+      await signup(emailRef?.current?.value, passwordRef?.current?.value).then(
+        (result) => addUser(result.user.uid, result.user.email)
+      );
     } catch {
       setHasAccount(true);
       setError('Failed to create an account');

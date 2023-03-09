@@ -33,8 +33,8 @@ export const addBike = async (req: Request, res: Response) => {
 export const getSingleBike = async (req: Request, res: Response) => {
   const bikeId = req.params.bikeId;
   try {
-    const bike = await Bike.find({ bikeId: bikeId })
-    res.send(bike[0])
+    const bike = await Bike.findOne({ bikeId: bikeId })
+    res.send(bike)
   } catch (error) {
     res.status(404).send({ message: 'not found' });
   }

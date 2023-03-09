@@ -6,6 +6,7 @@ import facebookLogo from '../../assets/facebookLogo.png';
 import googleLogo from '../../assets/googleLogo.png';
 import { ILoginSignUpProps } from '../../interfaces/interfaces';
 import styles from '../UserAuth/UserAuth.module.css';
+import { addUser } from '../../API/API';
 
 export function Login({
   setHasAccount,
@@ -16,31 +17,36 @@ export function Login({
   toggleModal,
 }: ILoginSignUpProps) {
   const { login, googleLogin, modal, setModal } = useAuth();
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const toggleHasAccount = () => setHasAccount(false);
 
+  // LOG IN WITH EMAIL / PASSWORD
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
       setError('');
       setLoading(true);
+      // doesn't call "addUser", so won't log user to console on backend
       await login(emailRef.current?.value, passwordRef.current?.value);
     } catch {
       setError('Failed to log in');
     }
-    console.log(emailRef.current?.value, passwordRef.current?.value);
     setLoading(false);
     setModal(false);
   }
 
+  // LOG IN WITH GOOGLE + ADD USER TO DB
   async function handleGoogleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
       setError('');
       setLoading(true);
-      await googleLogin();
+      // calls "addUser", so logs user to console on backend whether user exists already or not (see addUser in users.ts)
+      await googleLogin().then((result) =>
+        addUser(result.user.uid, result.user.email)
+      );
     } catch {
       setError('Failed to log in');
     }

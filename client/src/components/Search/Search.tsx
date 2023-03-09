@@ -5,7 +5,7 @@ import styles from './Search.module.css';
 export function Search({ setSearchQuery }: ISearchProps) {
   const [input, setInput] = useState('');
   const [prevSearches, setPrevSearches] = useState<string[]>([]);
-  console.log(prevSearches.slice(-5));
+  // console.log(prevSearches.slice(-5));
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);

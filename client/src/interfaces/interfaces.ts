@@ -50,6 +50,16 @@ export interface IStateType {
   loading: boolean;
   error: string;
 }
+// UserContext
+export interface IUserType {
+  userId: string | null;
+  bikeIds: string[];
+}
+export interface IUserStateType {
+  users: IUserType[];
+  loading: boolean;
+  error: string;
+}
 export const enum REDUCER_ACTION_TYPE {
   FETCH_REQUEST,
   FETCH_SUCCESS,

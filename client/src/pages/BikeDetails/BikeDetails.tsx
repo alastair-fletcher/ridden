@@ -25,6 +25,7 @@ export function BikeDetails() {
 
   //
   // ========== get info from db for specific bike
+  // 1st useEffect - to get bike details from DB then set "bikeDeets" state
   useEffect(() => {
     async function getAndSetBike() {
       try {
@@ -42,6 +43,7 @@ export function BikeDetails() {
 
   //
   // ========== set map location of specific bike
+  // 2nd useEffect - separate useEffect with bikeDeets as a dependency, so only runs and sets map after bikeDeets have been set.
   useEffect(() => {
     if (bikeDeets.latitude && bikeDeets.longitude) {
       map.current = new mapboxgl.Map({
