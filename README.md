@@ -1,7 +1,9 @@
-# RideAround
+# Ridden
 
-## What is it?
+- Ridden: second hand bike app
 
-RideAround allows users to rent bikes from local dealers.
+## Get started
 
-### `npm start`
+- run `npm i` in both **client** and **server** folders
+- in server folder, run `npm run dev`
+- in client folder, run `npm run dev`, then open at localhost stated in terminal
