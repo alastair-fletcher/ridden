@@ -34,9 +34,9 @@ export function Nav({ setSearchQuery }: INavProps) {
             <LinkContainer to="/profile">
               <img
                 className={`image-large ${styles.profilePic}`}
-                src={currentUser.photoURL}
-                alt={currentUser.displayName}
-                title={currentUser.displayName}
+                src={currentUser.photoURL ?? undefined}
+                alt={currentUser.displayName ?? undefined}
+                title={currentUser.displayName ?? undefined}
               />
             </LinkContainer>
           </div>

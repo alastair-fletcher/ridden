@@ -12,7 +12,6 @@ import {
   deleteUser,
   User,
 } from 'firebase/auth';
-
 import { IAuthContext } from '../interfaces/interfaces';
 
 // default value for auth context provided to clear up TS errors - not sure if this is best approach.
@@ -105,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
       setLoading(false);
     });

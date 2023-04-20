@@ -1,27 +1,20 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/card';
 import { IconContext } from 'react-icons';
 import { BiHeart } from 'react-icons/bi';
-import { IBikeType } from '../../interfaces/interfaces';
 import { useAuth } from '../../context/AuthContext';
 import { toggleLike } from '../../API/API';
+import { IBikeCardProps } from '../../interfaces/interfaces';
 import styles from './BikeCard.module.css';
 
-export function Bike({ bike }: { bike: IBikeType }) {
-  const [heartColor, setHeartColor] = useState(false);
-  const { currentUser, modal, setModal } = useAuth();
+export function Bike({ bike, usersLikedBikes }: IBikeCardProps) {
+  const { currentUser, setModal } = useAuth();
 
   function handleClick() {
     if (currentUser) {
-      setHeartColor((prev) => !prev);
-      if (!heartColor) {
-        toggleLike(currentUser?.uid, bike.bikeId);
-      } else {
-        toggleLike(currentUser?.uid, bike.bikeId);
-      }
+      toggleLike(currentUser?.uid, bike.bikeId);
     } else {
-      setModal((prev) => !prev);
+      setModal(prev => !prev);
     }
   }
 
@@ -40,10 +33,11 @@ export function Bike({ bike }: { bike: IBikeType }) {
           <IconContext.Provider
             value={{
               size: '1.6em',
-            }}
-          >
+            }}>
             <BiHeart
-              className={`${styles.heart} ${heartColor && styles.heartOn}`}
+              className={`${styles.heart} ${
+                usersLikedBikes.includes(bike.bikeId) && styles.heartOn
+              }`}
               onClick={handleClick}
             />
           </IconContext.Provider>

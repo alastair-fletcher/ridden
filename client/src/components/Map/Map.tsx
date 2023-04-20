@@ -12,25 +12,24 @@ export function Map({ setAddedBike }: IMapProps) {
 
   useEffect(() => {
     if (map.current) return;
-    //
+
     // ========= GET CURRENT LOCATION FROM GEOLOCATION API
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
       enableHighAccuracy: false,
     });
-    //
+
     // ========= SUCCESS HANDLER FOR getCurrentPosition
     function successLocation(position: GeolocationPosition) {
-      //
       // RENDER MAP
       map.current = new mapboxgl.Map({
         accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
-        container: mapContainer.current,
+        container: mapContainer.current ? mapContainer.current : '',
         style: 'mapbox://styles/mapbox/streets-v11',
         attributionControl: false,
         center: [position.coords.longitude, position.coords.latitude],
         zoom: 12,
       });
-      //
+
       // ========= Add a marker at the user's current location
       // const marker = new mapboxgl.Marker()
       //   .setLngLat([position.coords.longitude, position.coords.latitude])
@@ -41,7 +40,7 @@ export function Map({ setAddedBike }: IMapProps) {
         showUserLocation: true,
       });
       map?.current?.addControl(geoLocate, 'top-right');
-      //
+
       // ========= ADD GEOCODER INPUT
       const geoCoder = new MapboxGeocoder({
         accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
@@ -51,9 +50,9 @@ export function Map({ setAddedBike }: IMapProps) {
       map?.current?.addControl(geoCoder, 'top-left');
       geoCoder
         .query(`${position.coords.latitude}, ${position.coords.longitude}`)
-        .on('result', (result) => {
+        .on('result', result => {
           // ========= INITIALISE ADDED BIKE STATE WITH CURRENT LOCATION
-          setAddedBike((prevInfo) => ({
+          setAddedBike(prevInfo => ({
             ...prevInfo,
             longitude: result.result.center[0],
             latitude: result.result.center[1],

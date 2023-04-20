@@ -16,18 +16,33 @@ export const addUser = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    res.send(await User.find());
-    res.status(200);
+    const users = await User.find()
+    res.status(200).json(users);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ msg: error });
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
 
-export const getSingleUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
-    res.send(await User.findOne({ userId: userId }));
+    const user = await User.findOne({ userId: userId })
+    if (!user) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export const getUsersLikedBikes = async (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  try {
+    const user = await User.findOne({ userId: userId })
+    res.send(user?.bikeIds);
     res.status(200);
   } catch (error) {
     res.status(404).send({ message: 'not found' });

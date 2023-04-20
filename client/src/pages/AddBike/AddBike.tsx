@@ -19,14 +19,14 @@ export function AddBike() {
     image: '',
     longitude: 0,
     latitude: 0,
-    placeName: null,
+    placeName: '',
   };
   const [addedBike, setAddedBike] = useState<IBikeType>(bikeDefault);
 
   // ================================= TEXT
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setAddedBike((prevInfo) => ({
+    setAddedBike(prevInfo => ({
       ...prevInfo,
       [name]: value,
     }));
@@ -43,16 +43,16 @@ export function AddBike() {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
+        snapshot => {
           // Handle progress
         },
-        (error) => {
+        error => {
           // Handle error
         },
         () => {
           // Handle successful upload
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setAddedBike((prevInfo) => ({
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            setAddedBike(prevInfo => ({
               ...prevInfo,
               image: downloadURL,
             }));
@@ -132,8 +132,7 @@ export function AddBike() {
           type="submit"
           variant="primary"
           className="w-100 mt-4"
-          onClick={handleSubmit}
-        >
+          onClick={handleSubmit}>
           Submit
         </Button>
       </Form>

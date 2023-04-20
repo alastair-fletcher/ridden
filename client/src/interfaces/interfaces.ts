@@ -10,31 +10,33 @@ export interface ILoginSignUpProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
-  toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleModal: () => void;
 }
+
 // NavBar
 export interface INavProps {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
-// Home
-export interface IHomeProps {
-  searchQuery: string;
+
+// BikeCard
+export interface IBikeCardProps {
+  bike: IBikeType;
+  usersLikedBikes: string[];
 }
-// RecentlyAddedBikes
-export interface IBikeListProps {
-  searchQuery: string;
-}
+
 // Map
 export interface IMapProps {
   setAddedBike: React.Dispatch<React.SetStateAction<IBikeType>>;
 }
+
 // Search
 export interface ISearchProps {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
+
 // BikeContext
 export interface IBikeType {
-  bikeId: string | null;
+  bikeId: string;
   createdAt: string;
   userId: string | undefined;
   title: string;
@@ -43,28 +45,32 @@ export interface IBikeType {
   image: string;
   latitude: number;
   longitude: number;
-  placeName: string | null;
+  placeName: string;
 }
 export interface IStateType {
   bikes: IBikeType[];
   loading: boolean;
   error: string;
 }
+
 // UserContext
 export interface IUserType {
   userId: string | null;
   bikeIds: string[];
 }
+
 export interface IUserStateType {
   users: IUserType[];
   loading: boolean;
   error: string;
 }
+
 export const enum REDUCER_ACTION_TYPE {
   FETCH_REQUEST,
   FETCH_SUCCESS,
   FETCH_FAIL,
 }
+
 export interface IReducerAction {
   type: REDUCER_ACTION_TYPE;
   // TODO - check type for payload

@@ -10,7 +10,7 @@ export function UserAuth() {
   const [error, setError] = useState('');
   const { setModal } = useAuth();
 
-  const toggleModal = () => setModal((prev) => !prev);
+  const toggleModal = () => setModal(prev => !prev);
 
   return (
     <>

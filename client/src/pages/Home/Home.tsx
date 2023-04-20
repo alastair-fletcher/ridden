@@ -1,9 +1,8 @@
 import { Carousel } from 'react-bootstrap';
 import { BikeList } from '../../components/BikeList/BikeList';
-import { IHomeProps } from '../../interfaces/interfaces';
 import styles from './Home.module.css';
 
-export function Home({ searchQuery }: IHomeProps) {
+export function Home({ searchQuery }: { searchQuery: string }) {
   return (
     <>
       <div className={styles.hero}>

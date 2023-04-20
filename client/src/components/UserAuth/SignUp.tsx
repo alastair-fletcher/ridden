@@ -28,9 +28,10 @@ export function SignUp({
     try {
       setError('');
       setLoading(true);
-      await signup(emailRef?.current?.value, passwordRef?.current?.value).then(
-        (result) => addUser(result.user.uid, result.user.email)
-      );
+      await signup(
+        emailRef.current?.value ?? '',
+        passwordRef.current?.value ?? ''
+      ).then(result => addUser(result.user.uid, result.user.email));
     } catch {
       setHasAccount(true);
       setError('Failed to create an account');

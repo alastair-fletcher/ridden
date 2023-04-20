@@ -9,33 +9,37 @@ import { Bike } from "../models/Bike";
 
 export const getAllBikes = async (req: Request, res: Response) => {
   try {
-    res.send(await Bike.find());
-    res.status(201);
+    const bikes = await Bike.find()
+    res.status(200).json(bikes)
   } catch (error) {
-    res.status(500).json({ msg: error });
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export const getBike = async (req: Request, res: Response) => {
+  const bikeId = req.params.bikeId;
+  try {
+    const bike = await Bike.findOne({ bikeId: bikeId })
+    if (!bike) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.status(200).json(bike)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
 
 export const addBike = async (req: Request, res: Response) => {
+  const { bikeId, createdAt, userId, title, description, price, image, latitude, longitude, placeName } = req.body;
   try {
-    const { bikeId, createdAt, userId, title, description, price, image, latitude, longitude, placeName } = req.body;
     const bikeToAdd = await Bike.create({
       bikeId, createdAt, userId, title, description, price, image, latitude, longitude, placeName
     });
-    res.status(201);
-    res.send(bikeToAdd);
+    res.status(201).json(bikeToAdd);
   } catch (error) {
-    res.status(400);
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 }
-
-export const getSingleBike = async (req: Request, res: Response) => {
-  const bikeId = req.params.bikeId;
-  try {
-    const bike = await Bike.findOne({ bikeId: bikeId })
-    res.send(bike)
-  } catch (error) {
-    res.status(404).send({ message: 'not found' });
-  }
-};

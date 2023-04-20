@@ -6,8 +6,8 @@ import { IBikeType } from '../../interfaces/interfaces';
 import styles from './BikeDetails.module.css';
 
 export function BikeDetails() {
-  const [bikeDeets, setBikeDeets] = useState<IBikeType>({
-    bikeId: null,
+  const [bikeDetails, setBikeDetails] = useState<IBikeType>({
+    bikeId: '',
     createdAt: '',
     userId: '',
     title: '',
@@ -16,7 +16,7 @@ export function BikeDetails() {
     image: '',
     longitude: 0,
     latitude: 0,
-    placeName: null,
+    placeName: '',
   });
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -33,7 +33,7 @@ export function BikeDetails() {
           `http://localhost:8000/api/v1/bikes/${bikeId}`
         );
         const bikeData = await response.json();
-        setBikeDeets(bikeData);
+        setBikeDetails(bikeData);
       } catch (error) {
         console.log(error);
       }
@@ -45,17 +45,17 @@ export function BikeDetails() {
   // ========== set map location of specific bike
   // 2nd useEffect - separate useEffect with bikeDeets as a dependency, so only runs and sets map after bikeDeets have been set.
   useEffect(() => {
-    if (bikeDeets.latitude && bikeDeets.longitude) {
+    if (bikeDetails.latitude && bikeDetails.longitude) {
       map.current = new mapboxgl.Map({
         accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
-        container: mapContainer.current,
+        container: mapContainer.current ? mapContainer.current : '',
         style: 'mapbox://styles/mapbox/streets-v11',
         attributionControl: false,
-        center: [bikeDeets.longitude, bikeDeets.latitude],
+        center: [bikeDetails.longitude, bikeDetails.latitude],
         zoom: 12,
       });
     }
-  }, [bikeDeets]);
+  }, [bikeDetails]);
 
   return (
     <Container fluid>
@@ -63,12 +63,12 @@ export function BikeDetails() {
         <Col md={{ span: 6, offset: 3 }}>
           <img
             className="image-large"
-            src={bikeDeets?.image}
-            alt={bikeDeets?.title}
+            src={bikeDetails?.image}
+            alt={bikeDetails?.title}
           />
-          <h1>{bikeDeets?.placeName}</h1>
-          <p>{bikeDeets?.price}</p>
-          <p>{bikeDeets?.description}</p>
+          <h1>{bikeDetails?.placeName}</h1>
+          <p>{bikeDetails?.price}</p>
+          <p>{bikeDetails?.description}</p>
           <div ref={mapContainer} className={styles.mapContainer}></div>
         </Col>
       </Row>
